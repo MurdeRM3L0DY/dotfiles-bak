@@ -1,0 +1,11 @@
+{
+  "workspace.checkThirdParty": false,
+  "runtime.version": "LuaJIT",
+  "workspace.library": [
+    "~/.nix-profile/share/awesome/lib/",
+    "~/.nix-profile/share/lua/5.1/",
+    "~/.nix-profile/lib/lua/5.1/"
+  ],
+  "diagnostics.globals": [
+  ]
+}

@@ -1,0 +1,15 @@
+return {
+  bezier = require 'config.helpers.bezier',
+  client = require 'config.helpers.client',
+  color = require 'config.helpers.color',
+  filesystem = require 'config.helpers.filesystem',
+  input = require 'config.helpers.input',
+  inspect = require 'config.helpers.inspect',
+  json = require 'config.helpers.json',
+  layout = require 'config.helpers.layout',
+  misc = require 'config.helpers.misc',
+  run = require 'config.helpers.run',
+  string = require 'config.helpers.string',
+  table = require 'config.helpers.table',
+  ui = require 'config.helpers.ui',
+}

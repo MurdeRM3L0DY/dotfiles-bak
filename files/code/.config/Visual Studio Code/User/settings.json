@@ -1,0 +1,21 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "telemetry.telemetryLevel": "off",
+    "editor.fontFamily": "CartographCF Nerd Font",
+    "editor.fontSize": 15,
+    "editor.minimap.enabled": false,
+    "editor.lineNumbers": "relative",
+    "editor.fontLigatures": false,
+    "projectManager.git.baseFolders": [ "$home/projects" ],
+    "projectManager.sortList": "Recent",
+    "keyboard.dispatch": "keyCode",
+    "[glsl]": {},
+    "files.associations": {
+        "*.frag": "glsl"
+    },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "python.languageServer": "Pylance"
+}

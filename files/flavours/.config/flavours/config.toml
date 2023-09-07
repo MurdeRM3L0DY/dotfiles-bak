@@ -1,0 +1,39 @@
+shell = "zsh -c '{}'"
+
+[[items]]
+file = "~/.config/nvim/lua/utils/palette.lua"
+template = "nvim"
+subtemplate = "lush"
+start = "-- <flavours>"
+end = "-- </flavours>"
+
+[[items]]
+file = "~/.config/awesome/ui/theme.lua"
+template = "awesome"
+subtemplate = "colors"
+start = "-- <flavours>"
+end = "-- </flavours>"
+hook = 'awesome-client "awesome.restart()" &'
+
+[[items]]
+file = "$HOME/.zsh/functions/fzf_colors.zsh"
+template = "zsh"
+subtemplate = "fzf_colors"
+start = "# <flavours>"
+end = "# </flavours>"
+
+[[items]]
+file = "~/.config/kitty/kitty.conf"
+template = "kitty"
+subtemplate = "colors"
+start = "# <flavours>"
+end = "# </flavours>"
+hook = 'pkill -USR1 kitty &'
+
+[[items]]
+file = "~/.config/zellij/config.kdl"
+template = "zellij"
+subtemplate = "theme"
+start = "// <flavours>"
+end = "// </flavours>"
+# hook = 'pkill -USR1 kitty &'
