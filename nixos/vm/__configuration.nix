@@ -15,11 +15,11 @@
       options = "caps:swapescape";
     })
     (libinput {})
-    (docker {
-      storageDriver = "btrfs";
-    })
-    (qemu {})
-    (db.postgres {})
+    # (docker {
+    #   storageDriver = "btrfs";
+    # })
+    # (qemu {})
+    # (db.postgres {})
     # (desktop.awesome {})
     (desktop.gnome {})
     (users.nemesis {
@@ -34,10 +34,10 @@
   ];
 
   nixpkgs.overlays = with overlays; [
-    awesome
-    jdt-language-server
+    # awesome
+    # jdt-language-server
     nur
-    picom
+    # picom
   ];
   nixpkgs.config = {
     allowUnfree = true;
@@ -56,7 +56,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  networking.hostName = "archnemesis"; # Define your hostname.
+  networking.hostName = "vm"; # Define your hostname.
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 

@@ -142,9 +142,9 @@
 
         # DoH
         "network.trr.mode" = 3;
-        # "network.trr.url" = "https://dns.adguard.com/dns-query";
-        # "network.trr.custom_url" = "https://dns.adguard.com/dns-query";
-        "network.trr.default_provider_uri" = "https://dns.adguard.com/dns-query";
+        "network.trr.url" = "https://dns.mullvad.net/dns-query";
+        "network.trr.custom_url" = "https://dns.mullvad.net/dns-query";
+        "network.trr.default_provider_uri" = "https://dns.mullvad.net/dns-query";
 
         "network.captive-portal-service.enabled" = false;
 

@@ -90,6 +90,13 @@
         inherit src inputs transformer;
       };
 
+    overlays = importDefault {
+      src = ./overlays;
+      inputs = {
+        inherit inputs;
+      };
+    };
+
     homeModules = importDefault {
       src = ./modules/home-manager;
       inputs = {
@@ -102,37 +109,6 @@
       inputs = {
         inherit inputs;
         modules = homeModules;
-      };
-    };
-
-    home = importDefault {
-      src = ./home-manager;
-      inputs = {
-        inherit inputs overlays;
-        modules = homeModules;
-        profiles = homeProfiles;
-      };
-    };
-
-    nixosModules = importDefault {
-      src = ./modules/nixos;
-      inputs = {
-        inherit inputs;
-      };
-    };
-
-    nixosProfiles = importDefault {
-      src = ./profiles/nixos;
-      inputs = {
-        inherit inputs;
-        modules = nixosModules;
-      };
-    };
-
-    overlays = importDefault {
-      src = ./overlays;
-      inputs = {
-        inherit inputs;
       };
     };
 
@@ -159,6 +135,30 @@
       };
 
       news.display = "silent";
+    };
+
+    nixosModules = importDefault {
+      src = ./modules/nixos;
+      inputs = {
+        inherit inputs;
+      };
+    };
+
+    nixosProfiles = importDefault {
+      src = ./profiles/nixos;
+      inputs = {
+        inherit inputs;
+        modules = nixosModules;
+      };
+    };
+
+    home = importDefault {
+      src = ./home-manager;
+      inputs = {
+        inherit inputs overlays;
+        modules = homeModules;
+        profiles = homeProfiles;
+      };
     };
 
     hosts = importDefault {
@@ -211,40 +211,43 @@
       })
     hosts;
 
-    homeConfigurations = foldl (
-      acc: system:
-        acc
-        // (mapAttrs' (
-            username: module:
-              nameValuePair
-              "${username}.${system}"
-              (home-manager.lib.homeManagerConfiguration {
-                pkgs = module.standalone.pkgs {inherit system;};
+    homeConfigurations =
+      foldl (
+        acc: system:
+          acc
+          // (mapAttrs' (
+              username: module:
+                nameValuePair
+                "${username}.${system}"
+                (home-manager.lib.homeManagerConfiguration {
+                  pkgs = module.standalone.pkgs {inherit system;};
 
-                modules = [
-                  commonHomeProfile
+                  modules = [
+                    commonHomeProfile
 
-                  ({pkgs, ...}: {
-                    home.username = username;
-                    home.homeDirectory =
-                      if pkgs.hostPlatform.isDarwin
-                      then "/Users/${username}"
-                      else "/home/${username}";
+                    ({pkgs, ...}: {
+                      home.username = username;
+                      home.homeDirectory =
+                        if pkgs.hostPlatform.isDarwin
+                        then "/Users/${username}"
+                        else "/home/${username}";
 
-                    programs.home-manager = {
-                      enable = true;
-                    };
+                      programs.home-manager = {
+                        enable = true;
+                      };
 
-                    targets.genericLinux = {
-                      enable = pkgs.hostPlatform.isLinux;
-                    };
-                  })
+                      targets.genericLinux = {
+                        enable = pkgs.hostPlatform.isLinux;
+                      };
+                    })
 
-                  module.standalone.home
-                ];
-              })
-          )
-          home)
-    ) {} (flake-utils.lib.defaultSystems);
+                    module.standalone.home
+                  ];
+                })
+            )
+            home)
+      ) {} (with flake-utils.lib.system; [
+        x86_64-linux
+      ]);
   };
 }

@@ -12,33 +12,16 @@
 }: {
   imports = with super.profiles; [
     theme
-    awesome
+    # awesome
     fonts
     zsh
     kitty
     git
-    neovim
+    # neovim
     firefox
-    chromium
+    # chromium
   ];
 
   home.packages = with pkgs; [
-    android-tools
-    ansible
-    # bottles
-    # deluge-gtk
-    file
-    flavours
-    git-repo
-    jq
-    # qbittorrent
-    rar
-    # stow
-    themechanger
-    unzip
-    # wezterm
-    wget
-    yq
-    zip
   ];
 }

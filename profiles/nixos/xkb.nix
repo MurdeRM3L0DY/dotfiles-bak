@@ -5,7 +5,9 @@
     enable = true;
     autoRepeatDelay = 160;
     autoRepeatInterval = 40;
-    layout = c.layout or "";
-    xkbOptions = c.xkbOptions or "";
+    xkb = {
+      layout = c.layout or "";
+      options = c.options or "";
+    };
   };
 }

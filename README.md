@@ -3,13 +3,8 @@
 ### nixos system
 * from the nixos installer:
 ```bash
-bash $(
-    nix build --no-link --print-out-paths \
-        --extra-experimental-features "nix-command flakes" \
-        github:MurdeRM3L0DY/dotfiles#nixosConfigurations.archnemesis.config.system.build.diskoScript
-)
-
-nixos-install --flake github:MurdeRM3L0DY/dotfiles#archnemesis
+sudo nix run --extra-experimental-features "nix-command flakes" github:nix-community/disko -- -m disko -f github:MurdeRM3L0DY/dotfiles#archnemesis
+sudo nixos-install --flake github:MurdeRM3L0DY/dotfiles#archnemesis
 ```
 
 ### home-manager standalone
