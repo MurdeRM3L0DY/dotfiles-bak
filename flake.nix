@@ -31,7 +31,6 @@
     };
   };
 
-
   # tools
   inputs = {
     neovim = {
@@ -54,9 +53,9 @@
     };
   };
 
-   inputs.hyprland = {
-     url = "github:hyprwm/Hyprland";
-   };
+  inputs.hyprland = {
+    url = "github:hyprwm/Hyprland";
+  };
 
   # sources
   inputs = {
@@ -92,14 +91,14 @@
       };
 
     homeModules = importDefault {
-      src = ./modules/home;
+      src = ./modules/home-manager;
       inputs = {
         inherit inputs;
       };
     };
 
     homeProfiles = importDefault {
-      src = ./profiles/home;
+      src = ./profiles/home-manager;
       inputs = {
         inherit inputs;
         modules = homeModules;
@@ -121,12 +120,18 @@
         enable = true;
       };
 
+      programs.man = {
+        enable = true;
+      };
+
       xdg = {
         enable = true;
         mime = {
           enable = true;
         };
       };
+
+      news.display = "silent";
 
       home.stateVersion = "23.05";
     };
@@ -141,7 +146,7 @@
           ];
         };
       }) (importDefault {
-        src = ./home;
+        src = ./home-manager;
         inputs = {
           inherit inputs overlays;
           modules = homeModules;
@@ -172,7 +177,7 @@
     };
 
     hosts = importDefault {
-      src = ./hosts/nixos;
+      src = ./nixos;
       inputs = {
         inherit inputs overlays;
         modules = nixosModules;
@@ -243,10 +248,10 @@
           home)
     ) {} (flake-utils.lib.defaultSystems);
 
-    packages = foldl (acc: system: acc // {
-      ${system} = {
-        home-manager = home-manager.packages.${system}.default;
-      };
-    }) {} (flake-utils.lib.defaultSystems);
+    # packages = foldl (acc: system: acc // {
+    #   ${system} = {
+    #     home-manager = home-manager.packages.${system}.default;
+    #   };
+    # }) {} (flake-utils.lib.defaultSystems);
   };
 }
