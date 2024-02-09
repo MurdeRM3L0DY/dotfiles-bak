@@ -1,0 +1,36 @@
+code/.config/VSCodium/Cache/
+code/.config/VSCodium/CachedData/
+code/.config/VSCodium/CachedExtensionVSIXs/
+code/.config/VSCodium/Code Cache/
+code/.config/VSCodium/Crashpad/
+code/.config/VSCodium/DawnCache/
+code/.config/VSCodium/Dictionaries/
+code/.config/VSCodium/GPUCache/
+code/.config/VSCodium/Local Storage/
+code/.config/VSCodium/Service Worker/
+code/.config/VSCodium/Session Storage/
+code/.config/VSCodium/WebStorage/
+code/.config/VSCodium/blob_storage/
+code/.config/VSCodium/databases/
+code/.config/VSCodium/logs/
+code/.config/VSCodium/Cookies
+code/.config/VSCodium/Cookies-journal
+code/.config/VSCodium/Network Persistent State
+code/.config/VSCodium/Preferences
+code/.config/VSCodium/TransportSecurity
+code/.config/VSCodium/languagepacks.json
+code/.config/VSCodium/machineid
+
+code/.config/Visual Studio Code/Backups/
+code/.config/Visual Studio Code/CachedConfigurations/
+code/.config/Visual Studio Code/CachedProfilesData/
+code/.config/Visual Studio Code/User/History/
+code/.config/Visual Studio Code/User/globalStorage/
+code/.config/Visual Studio Code/User/workspaceStorage/
+code/.config/Visual Studio Code/logs/
+code/.config/Visual Studio Code/code.lock
+
+ags/.config/ags/node_modules
+ags/.config/ags/types
+
+**/.uuid

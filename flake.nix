@@ -31,7 +31,6 @@
     };
   };
 
-
   # tools
   inputs = {
     neovim = {
@@ -54,9 +53,9 @@
     };
   };
 
-   inputs.hyprland = {
-     url = "github:hyprwm/Hyprland";
-   };
+  inputs.hyprland = {
+    url = "github:hyprwm/Hyprland";
+  };
 
   # sources
   inputs = {
@@ -78,7 +77,7 @@
     haumea,
     ...
   }: let
-    inherit (nixpkgs.lib) mapAttrs mapAttrs' nameValuePair foldl attrNames;
+    inherit (nixpkgs.lib) mapAttrs mapAttrs' nameValuePair foldl;
     inherit (haumea.lib) load loaders transformers;
 
     importDefault = {
@@ -92,62 +91,28 @@
       };
 
     homeModules = importDefault {
-      src = ./modules/home;
+      src = ./modules/home-manager;
       inputs = {
         inherit inputs;
       };
     };
 
     homeProfiles = importDefault {
-      src = ./profiles/home;
+      src = ./profiles/home-manager;
       inputs = {
         inherit inputs;
         modules = homeModules;
       };
     };
 
-    commonHomeProfile = {
-      imports = [
-        homeModules.remotefiles
-      ];
-
-      home.remotefiles."self" = {
-        type = "git";
-        url = "https://github.com/MurdeRM3L0DY/dotfiles";
-        path = "dotfiles";
+    home = importDefault {
+      src = ./home-manager;
+      inputs = {
+        inherit inputs overlays;
+        modules = homeModules;
+        profiles = homeProfiles;
       };
-
-      programs.home-manager = {
-        enable = true;
-      };
-
-      xdg = {
-        enable = true;
-        mime = {
-          enable = true;
-        };
-      };
-
-      home.stateVersion = "23.05";
     };
-
-    home =
-      mapAttrs (_: module: {
-        inherit (module) profiles standalone;
-        home = {
-          imports = [
-            commonHomeProfile
-            module.home
-          ];
-        };
-      }) (importDefault {
-        src = ./home;
-        inputs = {
-          inherit inputs overlays;
-          modules = homeModules;
-          profiles = homeProfiles;
-        };
-      });
 
     nixosModules = importDefault {
       src = ./modules/nixos;
@@ -171,8 +136,33 @@
       };
     };
 
+    commonHomeProfile = {
+      imports = [
+        homeModules.remotefiles
+      ];
+
+      home.remotefiles."self" = {
+        type = "git";
+        url = "https://github.com/MurdeRM3L0DY/dotfiles";
+        path = "dotfiles";
+      };
+
+      programs.man = {
+        enable = true;
+      };
+
+      xdg = {
+        enable = true;
+        mime = {
+          enable = true;
+        };
+      };
+
+      news.display = "silent";
+    };
+
     hosts = importDefault {
-      src = ./hosts/nixos;
+      src = ./nixos;
       inputs = {
         inherit inputs overlays;
         modules = nixosModules;
@@ -189,7 +179,17 @@
                     isNormalUser = true;
                   };
 
-                home-manager.users.${name} = module.home;
+                home-manager.users.${name} = {
+                  imports = [
+                    commonHomeProfile
+
+                    ({osConfig, ...}: {
+                      home.stateVersion = osConfig.system.stateVersion;
+                    })
+
+                    module.home
+                  ];
+                };
               }))
               home;
           };
@@ -231,6 +231,10 @@
                       then "/Users/${username}"
                       else "/home/${username}";
 
+                    programs.home-manager = {
+                      enable = true;
+                    };
+
                     targets.genericLinux = {
                       enable = pkgs.hostPlatform.isLinux;
                     };
@@ -242,11 +246,5 @@
           )
           home)
     ) {} (flake-utils.lib.defaultSystems);
-
-    packages = foldl (acc: system: acc // {
-      ${system} = {
-        home-manager = home-manager.packages.${system}.default;
-      };
-    }) {} (flake-utils.lib.defaultSystems);
   };
 }
